@@ -5,30 +5,27 @@ import './App.css';
 import Bgm from './components/bgm.mp4';
 import { Link } from 'react-router-dom';
 
+const BACKEND_API = "https://your-backend-api.up.railway.app"; // Set your Railway backend URL
+const backendURL = process.env.REACT_APP_BACKEND_URL || BACKEND_API;
+
 function Home() {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
-  // Use an environment variable for the backend URL (set this in Vercel), or fallback to "/"
-  const backendURL = process.env.REACT_APP_BACKEND_URL || "/";
-
   const handleExplore = (e) => {
-    e.preventDefault(); // Prevent the default link action
+    e.preventDefault(); // Prevent default link action
 
     // Retrieve the user profile from localStorage (default to Free if not found)
     const storedProfile = JSON.parse(localStorage.getItem("userProfile")) || { plan: "Free" };
 
     if (storedProfile.plan === "Free") {
-      // Show the custom upgrade modal for free users
       setShowUpgradeModal(true);
     } else {
-      // Redirect premium users to the MoodSync backend homepage
       window.location.href = backendURL;
     }
   };
 
   const handleUpgradeConfirm = () => {
-    // Redirect to the pricing page (relative path)
-    window.location.href = "/pricing";
+    window.location.href = "/pricing"; // Redirect to pricing page
   };
 
   const handleUpgradeCancel = () => {
